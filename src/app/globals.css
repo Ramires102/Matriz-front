@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --body-bg: #f1f5f9;
+    --body-text: #0f172a;
+    --header-bg: rgba(255,255,255,0.9);
+    --header-border: rgba(0,0,0,0.06);
+    --surface: rgba(0,0,0,0.05);
+    --surface-hover: rgba(0,0,0,0.1);
+    --text-30: rgba(0,0,0,0.3);
+    --text-35: rgba(0,0,0,0.35);
+    --text-40: rgba(0,0,0,0.4);
+    --text-50: rgba(0,0,0,0.5);
+    --text-70: rgba(0,0,0,0.7);
+    --border-light: rgba(0,0,0,0.1);
+    --muted: rgba(0,0,0,0.5);
+    --card-bg: #fff;
+    --card-border: rgba(0,0,0,0.08);
+    --modal-bg: #fff;
+    --modal-body-bg: #fff;
+  }
+
+  .dark {
+    --body-bg: #000;
+    --body-text: #fff;
+    --header-bg: rgba(0,0,0,0.9);
+    --header-border: rgba(255,255,255,0.07);
+    --surface: rgba(255,255,255,0.05);
+    --surface-hover: rgba(255,255,255,0.1);
+    --text-30: rgba(255,255,255,0.3);
+    --text-35: rgba(255,255,255,0.35);
+    --text-40: rgba(255,255,255,0.4);
+    --text-50: rgba(255,255,255,0.5);
+    --text-70: rgba(255,255,255,0.7);
+    --border-light: rgba(255,255,255,0.1);
+    --muted: rgba(255,255,255,0.5);
+    --card-bg: rgba(255,255,255,0.02);
+    --card-border: rgba(255,255,255,0.05);
+    --modal-bg: #060608;
+    --modal-body-bg: #060608;
+  }
+}
+
+html, body {
+  font-family: Inter, sans-serif;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--body-bg);
+  color: var(--body-text);
+}
+
+.masonry-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .masonry-grid { gap: 16px; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn .15s ease;
+}
+
+@media (max-width: 1200px) {
+  .bottom-nav { display: flex !important; }
+  .app { padding-bottom: 60px; }
+}
+
+body.light-theme .cbadge,
+body.light-theme .m-badge-cat,
+body.light-theme .hero-badge {
+  color: #fff !important;
+  background: #8B5CF6 !important;
+  border-color: #7c3aed !important;
+}
+
+body.light-theme .modal-wrap {
+  background: #fff;
+  border-color: color-mix(in srgb, var(--tc, rgba(0,0,0,0.15)) 40%, transparent);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.15), 0 0 45px color-mix(in srgb, var(--tc, transparent) 20%, transparent);
+}
+body.light-theme .modal-body { background: #fff; }
+body.light-theme .modal-cover-gradient { background: linear-gradient(to bottom,rgba(255,255,255,0) 10%,rgba(255,255,255,0.5) 60%,#fff 100%); }
+
+body.light-theme .like-btn.liked { color: #ef4444; background: rgba(255,255,255,0.8); }
+body.light-theme .like-btn.liked svg { fill: #ef4444; }
