@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import { CloseIcon, EditIcon, HomeIcon, GridIcon, UsersIcon, FileIcon, PlusIcon, SettingsIcon, LogoutIcon, MoonIcon, SunIcon, HeartIcon } from "@/components/ui/Icons";
 import { getEventCategories } from "@/lib/api";
@@ -525,6 +526,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ open, onClose }: SidebarProps) {
+  const router = useRouter();
   const { theme, toggleTheme } = useTheme();
   const { token, user, logout } = useAuth();
   const [profileOpen, setProfileOpen] = useState(false);
@@ -589,9 +591,8 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           <nav className="flex flex-col gap-1.5 mt-3">
             {[
               { icon: HomeIcon, label: "Home" },
-              { icon: GridIcon, label: "Mis eventos", onClick: () => setEventosOpen(true) },
-              { icon: UsersIcon, label: "Mis amigos", onClick: () => setFriendsOpen(true) },
-              { icon: FileIcon, label: "Comunidades" },
+              { icon: GridIcon, label: "Mis eventos", onClick: () => { router.push("/events"); onClose(); } },
+              { icon: UsersIcon, label: "Mis amigos", onClick: () => { router.push("/chats"); onClose(); } },
             ].map(({ icon: Icon, label, onClick }) => (
               <button
                 key={label}
@@ -629,7 +630,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           </div>
           <nav className="flex flex-col gap-1.5 mt-3">
             {[
-              { icon: PlusIcon, label: "Crear evento", onClick: () => setCreateOpen(true) },
+              { icon: PlusIcon, label: "Crear evento", onClick: () => { router.push("/events"); onClose(); } },
               { icon: SettingsIcon, label: "Configuración" },
               { icon: LogoutIcon, label: "Cerrar Sesión", onClick: () => { logout(); } },
             ].map(({ icon: Icon, label, onClick }) => (

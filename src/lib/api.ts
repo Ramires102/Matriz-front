@@ -1,4 +1,4 @@
-import type { ApiEvent, EventCategory, EventsResponse, EventsQueryParams } from "./types";
+import type { ApiEvent, EventCategory, EventsResponse, EventsQueryParams, ChatRoom, ChatMessage, ApiUser } from "./types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
@@ -53,4 +53,81 @@ export async function createEvent(formData: FormData, token: string): Promise<Ap
     throw new Error(body?.message ?? `API error ${res.status}`);
   }
   return res.json();
+}
+
+export async function updateEvent(id: number, data: Record<string, any>, token: string): Promise<ApiEvent> {
+  const res = await fetch(`${API_URL}/events/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => null);
+    throw new Error(body?.message ?? `API error ${res.status}`);
+  }
+  return res.json();
+}
+
+export async function deleteEvent(id: number, token: string): Promise<void> {
+  const res = await fetch(`${API_URL}/events/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => null);
+    throw new Error(body?.message ?? `API error ${res.status}`);
+  }
+}
+
+export async function getUsers(token: string): Promise<ApiUser[]> {
+  return fetchJSON<ApiUser[]>("/users", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export async function getUserChats(userId: number, token: string): Promise<ChatRoom[]> {
+  return fetchJSON<ChatRoom[]>(`/chats/user/${userId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export async function startChat(recipientId: number, token: string): Promise<ChatRoom> {
+  return fetchJSON<ChatRoom>("/chats", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ recipientId }),
+  });
+}
+
+export async function getChatMessages(chatId: number, token: string): Promise<ChatMessage[]> {
+  return fetchJSON<ChatMessage[]>(`/chats/${chatId}/messages`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export async function sendChatMessage(chatId: number, content: string, token: string): Promise<ChatMessage> {
+  return fetchJSON<ChatMessage>(`/chats/${chatId}/messages`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ content }),
+  });
+}
+
+export async function addChatComment(chatId: number, type: string, content: string, token: string): Promise<ChatMessage> {
+  return fetchJSON<ChatMessage>(`/chats/${chatId}/comments`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ type, content }),
+  });
+}
+
+export async function getChatComments(chatId: number, token: string): Promise<ChatMessage[]> {
+  return fetchJSON<ChatMessage[]>(`/chats/${chatId}/comments`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 }

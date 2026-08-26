@@ -76,10 +76,7 @@ body {
   animation: fadeIn .15s ease;
 }
 
-@media (max-width: 1200px) {
-  .bottom-nav { display: flex !important; }
-  .app { padding-bottom: 60px; }
-}
+
 
 body.light-theme .cbadge,
 body.light-theme .m-badge-cat,
