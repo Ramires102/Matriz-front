@@ -5,7 +5,6 @@ import Background from "@/components/layout/Background";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import RightPanel from "@/components/layout/RightPanel";
-import BottomNav from "@/components/layout/BottomNav";
 import Modal from "@/components/layout/Modal";
 import HeroCarousel from "@/components/home/HeroCarousel";
 import FeedGrid from "@/components/home/FeedGrid";
@@ -179,11 +178,6 @@ export default function HomePage() {
 
         <RightPanel />
       </div>
-
-      <BottomNav
-        onMenuToggle={() => setMenuOpen(!menuOpen)}
-        onDrawerToggle={() => setDrawerOpen(!drawerOpen)}
-      />
 
       <Modal
         event={modalData.event}

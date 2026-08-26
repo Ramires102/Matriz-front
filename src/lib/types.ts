@@ -95,3 +95,29 @@ export interface ApiError {
   message: string;
   error?: string;
 }
+
+export interface ChatMember {
+  id: number;
+  user: string;
+  name: string;
+  image: string | null;
+  verified: boolean;
+  isAdmin?: boolean;
+}
+
+export interface ChatRoom {
+  id: number;
+  name: string;
+  lastMessage: { text: string | null; createdAt: string; userFK: number } | null;
+  members: ChatMember[];
+}
+
+export interface ChatMessage {
+  id: number;
+  chatFK?: number;
+  userFK: number;
+  text: string | null;
+  image: string | null;
+  createdAt: string;
+  user: { id: number; user: string; name: string; image: string | null };
+}
