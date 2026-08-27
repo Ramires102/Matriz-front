@@ -1,21 +1,14 @@
 "use client";
 
 import { useState, FormEvent, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 
 function LoginForm() {
-  const { login, register } = useAuth();
+  const { login } = useAuth();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const defaultMode = searchParams.get("mode") === "register" ? "register" : "login";
-  const [mode, setMode] = useState<"login" | "register">(defaultMode);
   const [user, setUser] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [dni, setDni] = useState("");
-  const [address, setAddress] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -24,11 +17,7 @@ function LoginForm() {
     setError("");
     setLoading(true);
     try {
-      if (mode === "login") {
-        await login(user, password);
-      } else {
-        await register(user, name, email, password, dni, address);
-      }
+      await login(user, password);
       router.push("/");
     } catch (err: any) {
       setError(err.message);
@@ -46,7 +35,7 @@ function LoginForm() {
           </div>
           <h1 className="text-2xl font-black" style={{ color: "var(--body-text)" }}>Meeter</h1>
           <p className="text-sm mt-1" style={{ color: "var(--text-40)" }}>
-            {mode === "login" ? "Iniciar sesión" : "Crear cuenta"}
+            Iniciar sesión
           </p>
         </div>
 
@@ -57,35 +46,6 @@ function LoginForm() {
               className="w-full outline-none text-sm px-4 py-3 rounded-xl"
               style={{ background: "var(--surface)", border: "1px solid var(--border-light)", color: "var(--body-text)" }} />
           </div>
-
-          {mode === "register" && (
-            <>
-              <div>
-                <label className="text-xs font-semibold mb-1 block" style={{ color: "var(--text-40)" }}>Nombre</label>
-                <input type="text" value={name} onChange={e => setName(e.target.value)} required
-                  className="w-full outline-none text-sm px-4 py-3 rounded-xl"
-                  style={{ background: "var(--surface)", border: "1px solid var(--border-light)", color: "var(--body-text)" }} />
-              </div>
-              <div>
-                <label className="text-xs font-semibold mb-1 block" style={{ color: "var(--text-40)" }}>Email</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
-                  className="w-full outline-none text-sm px-4 py-3 rounded-xl"
-                  style={{ background: "var(--surface)", border: "1px solid var(--border-light)", color: "var(--body-text)" }} />
-              </div>
-              <div>
-                <label className="text-xs font-semibold mb-1 block" style={{ color: "var(--text-40)" }}>DNI <span style={{ color: "#ef4444" }}>*</span></label>
-                <input type="text" value={dni} onChange={e => setDni(e.target.value)} required
-                  className="w-full outline-none text-sm px-4 py-3 rounded-xl"
-                  style={{ background: "var(--surface)", border: "1px solid var(--border-light)", color: "var(--body-text)" }} />
-              </div>
-              <div>
-                <label className="text-xs font-semibold mb-1 block" style={{ color: "var(--text-40)" }}>Domicilio <span className="text-[var(--text-35)]">(opcional)</span></label>
-                <input type="text" value={address} onChange={e => setAddress(e.target.value)}
-                  className="w-full outline-none text-sm px-4 py-3 rounded-xl"
-                  style={{ background: "var(--surface)", border: "1px solid var(--border-light)", color: "var(--body-text)" }} />
-              </div>
-            </>
-          )}
 
           <div>
             <label className="text-xs font-semibold mb-1 block" style={{ color: "var(--text-40)" }}>Contraseña</label>
@@ -99,7 +59,7 @@ function LoginForm() {
           <button type="submit" disabled={loading}
             className="w-full font-bold text-sm py-3 rounded-xl border-none cursor-pointer transition-all active:scale-95 disabled:opacity-50"
             style={{ background: "#8B5CF6", color: "#fff" }}>
-            {loading ? "Cargando..." : mode === "login" ? "Iniciar Sesión" : "Crear Cuenta"}
+            {loading ? "Cargando..." : "Iniciar Sesión"}
           </button>
         </form>
 
