@@ -106,8 +106,8 @@ function LoginForm() {
         <button
           className="w-full text-center text-xs font-semibold mt-4 bg-transparent border-none cursor-pointer"
           style={{ color: "var(--text-40)" }}
-          onClick={() => { setMode(mode === "login" ? "register" : "login"); setError(""); }}>
-          {mode === "login" ? "¿No tenés cuenta? Registrate" : "¿Ya tenés cuenta? Iniciá sesión"}
+          onClick={() => router.push("/register")}>
+          ¿No tenés cuenta? Registrate
         </button>
       </div>
     </div>
