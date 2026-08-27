@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useState, FormEvent, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 
-export default function LoginPage() {
+function LoginForm() {
   const { login, register } = useAuth();
   const router = useRouter();
-  const [mode, setMode] = useState<"login" | "register">("login");
+  const searchParams = useSearchParams();
+  const defaultMode = searchParams.get("mode") === "register" ? "register" : "login";
+  const [mode, setMode] = useState<"login" | "register">(defaultMode);
   const [user, setUser] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -109,5 +111,13 @@ export default function LoginPage() {
         </button>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-white">Cargando...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }
