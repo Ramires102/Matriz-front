@@ -439,7 +439,8 @@ function CreateEventPanel({ onClose, onSave, token }: { onClose: () => void; onS
           form.append("open", visibility === "public" ? "true" : "false");
           if (token) {
             try {
-              const res = await fetch(`http://localhost:3000/events`, {
+              const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+              const res = await fetch(`${API_URL}/events`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
                 body: form,
