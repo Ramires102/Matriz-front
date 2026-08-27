@@ -10,6 +10,9 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
+  "vars": {
+    "NEXT_PUBLIC_API_URL": "https://matriz-hg5s.onrender.com"
+  },
   "observability": {
     "enabled": true
   }
