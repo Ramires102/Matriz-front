@@ -3,6 +3,7 @@
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
+import { navigateToAuthPage } from "@/lib/auth-navigation";
 
 export default function RegisterPage() {
   const { register } = useAuth();
@@ -96,7 +97,7 @@ export default function RegisterPage() {
         <button
           className="w-full text-center text-xs font-semibold mt-4 bg-transparent border-none cursor-pointer"
           style={{ color: "var(--text-40)" }}
-          onClick={() => router.push("/login")}>
+          onClick={() => navigateToAuthPage(router, "login")}>
           ¿Ya tenés cuenta? Iniciá sesión
         </button>
       </div>
